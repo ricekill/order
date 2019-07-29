@@ -1,0 +1,31 @@
+{
+  "listen":":",
+  "redis": {
+    "network": "tcp",
+    "address": "127.0.0.1:6379",
+    "database": 0,
+    "password": "",
+    "showCommand": true
+  },
+  "db": {
+    "host": "",
+    "name": "",
+    "user": "",
+    "password": "",
+    "showSQL":
+  },
+  "log": {
+        "logFile":"",
+        "saveType":"d",
+        "traceLevel":2
+  },
+  "rpcServer": {
+         "project":{
+                    "user":"tcp://xxx.xxx.xxx.xxx:xxxx",
+                    "vendor":"tcp://xxx.xxx.xxx.xxx:xxxx",
+                    "cart":"tcp://xxx.xxx.xxx.xxx:xxxx",
+                    "products":"tcp://xxx.xxx.xxx.xxx:xxxx",
+                    "coupon":"tcp://xxx.xxx.xxx.xxx:xxxx"
+         }
+    }
+}

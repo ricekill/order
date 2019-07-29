@@ -1,0 +1,253 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "订单模块微服务.",
+        "title": "Project Order Backend API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "order.dd01.work:5070",
+    "basePath": "/api/v1",
+    "paths": {
+        "/order/create": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "生成订单",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "买家ID",
+                        "name": "buyer_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "买家名字",
+                        "name": "buyer_name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "卖家ID",
+                        "name": "seller_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "卖家名字",
+                        "name": "seller_name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "买家手机号",
+                        "name": "cellphone_number",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "行业类型1餐饮,2零售",
+                        "name": "trade_type",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "场景类型1堂食,2外卖",
+                        "name": "scene_type",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "取货码",
+                        "name": "take_goods_code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "预约取货时间",
+                        "name": "take_goods_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "备货时间",
+                        "name": "prepare_goods_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "float",
+                        "description": "服务费率eg 0.05",
+                        "name": "service_rate",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "订单排单号,可用来取货",
+                        "name": "order_numeral",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "订单来源 1.H5 2.iOS 3.Android",
+                        "name": "order_source",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "订单描述",
+                        "name": "order_msg",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "订单商品数量",
+                        "name": "order_product_counts",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "decimal",
+                        "description": "订单商品总金额(此订单所有商品的金额)",
+                        "name": "order_grand_total",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "decimal",
+                        "description": "订单总付款金额",
+                        "name": "order_amount_total",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "decimal",
+                        "description": "包装费",
+                        "name": "packing_fee",
+                        "in": "query"
+                    },
+                    {
+                        "type": "decimal",
+                        "description": "配送费",
+                        "name": "shipping_fee",
+                        "in": "query"
+                    },
+                    {
+                        "type": "decimal",
+                        "description": "优惠券优惠",
+                        "name": "coupon_fee",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "优惠券码",
+                        "name": "coupon_user_code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "券规则码",
+                        "name": "coupon_code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "扩展字段",
+                        "name": "cext",
+                        "in": "query"
+                    },
+                    {
+                        "description": "商品信息",
+                        "name": "order_detail",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/api.OrderDetailS"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{\"id\":3,\"created_on\":1516937037,\"modified_on\":0,\"tag_id\":11,\"tag\":{\"id\":11,\"created_on\":1516851591,\"modified_on\":0,\"name\":\"312321\",\"created_by\":\"4555\",\"modified_by\":\"\",\"state\":1},\"content\":\"5555\",\"created_by\":\"2412\",\"modified_by\":\"\",\"state\":1},\"msg\":\"ok\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "api.OrderDetailS": {
+            "type": "object",
+            "required": [
+                "productUnitPrice",
+                "productPriceCount",
+                "psku",
+                "productCount",
+                "productPrice",
+                "productType",
+                "sku",
+                "productId",
+                "productName",
+                "productOriginalPrice"
+            ],
+            "properties": {
+                "productComment": {
+                    "type": "string"
+                },
+                "productCount": {
+                    "type": "integer"
+                },
+                "productId": {
+                    "type": "integer"
+                },
+                "productName": {
+                    "type": "string"
+                },
+                "productOriginalPrice": {
+                    "type": "number"
+                },
+                "productPrice": {
+                    "type": "number"
+                },
+                "productPriceCount": {
+                    "type": "integer"
+                },
+                "productType": {
+                    "type": "integer"
+                },
+                "productUnitPrice": {
+                    "type": "number"
+                },
+                "psku": {
+                    "type": "integer"
+                },
+                "sku": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

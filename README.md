@@ -1,4 +1,4 @@
-#### eatojoy-order-backend
+#### order-backend
 基于gin-gonic/gin 框架搭建的订单模块微服务MVC架构的空架子。
 
 #### 此项目集成开发常用的功能：

@@ -1,0 +1,96 @@
+CREATE TABLE `app` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_key` varchar(45) NOT NULL,
+  `app_secret` varchar(45) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `code` varchar(45) NOT NULL,
+  `rpc_server` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `m_order_00` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` char(25) NOT NULL COMMENT '订单id',
+  `platform_id` int(10) unsigned NOT NULL COMMENT '平台id',
+  `buyer_id` int(10) unsigned NOT NULL COMMENT '买家id',
+  `buyer_name` varchar(20) DEFAULT NULL COMMENT '买家名字',
+  `seller_id` int(10) unsigned NOT NULL COMMENT '卖家id',
+  `seller_name` varchar(20) DEFAULT NULL COMMENT '卖家名字',
+  `cellphone_number` varchar(20) DEFAULT NULL COMMENT '买家手机号',
+  `trade_type` tinyint(3) unsigned NOT NULL COMMENT '行业类型:1.餐饮 2.零售',
+  `scene_type` tinyint(3) unsigned NOT NULL COMMENT '场景类型:1.堂食 2.外卖',
+  `seller_type` tinyint(3) unsigned NOT NULL COMMENT '商店类型 1外卖 2预售',
+  `order_status` tinyint(3) unsigned NOT NULL COMMENT '订单状态:1.待支付 2.待接单 3.备餐中 4.待取餐 5.已取餐 6.已完成 7.已取消 8.待备餐',
+  `advance_order_status` tinyint(3) unsigned NOT NULL COMMENT '预订单状态:0.新订单 1.预订单 2.待备餐',
+  `take_goods_code` int(10) unsigned DEFAULT NULL COMMENT '取货码',
+  `take_goods_time` int(10) unsigned DEFAULT NULL COMMENT '预约取货时间',
+  `prepare_goods_time` int(10) unsigned DEFAULT NULL COMMENT '备货时间',
+  `service_rate` double(4,2) DEFAULT NULL COMMENT '服务费率(整数百分比如5%存5)',
+  `order_numeral` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '订单排单号',
+  `order_complete_time` int(10) DEFAULT '0' COMMENT '订单完成时间',
+  `order_source` tinyint(3) unsigned NOT NULL COMMENT '订单来源:1.H5 2.iOS 3.Android',
+  `order_msg` varchar(255) DEFAULT NULL COMMENT '订单描述',
+  `order_product_counts` smallint(5) unsigned NOT NULL COMMENT '订单商品总数量',
+  `order_grand_total` decimal(15,2) NOT NULL COMMENT '订单商品总金额(此订单所有商品的金额)',
+  `order_amount_total` decimal(15,2) NOT NULL COMMENT '订单总金额(订单要付款的价格)',
+  `packing_fee` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '包装费',
+  `shipping_fee` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '配送费',
+  `coupon_fee` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '优惠券优惠价格',
+  `coupon_user_code` varchar(32) DEFAULT '' COMMENT '优惠券码',
+  `coupon_code` varchar(10) DEFAULT '' COMMENT '优惠券规则id',
+  `pay_type` tinyint(3) unsigned DEFAULT '0' COMMENT '支付类型:0.默认值没支付 1.信用卡 2.银联支付 3.微信支付 4.支付宝支付 5.paypal',
+  `actual_pay_price` decimal(15,2) DEFAULT NULL COMMENT '订单实际付款价格(同订单总金额，付款成功后写入，做校验使用)',
+  `order_pay_time` int(10) unsigned DEFAULT NULL COMMENT '支付时间',
+  `pay_serial_number` varchar(25) DEFAULT ' ' COMMENT '支付流水号',
+  `after_sales_status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否发起售后 0:不发起  1:发起售后 2.售后完成',
+  `payments_final_status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '收支类型 0:订单收入 1:取消订单退款 2:拒单退款 3:商家售后退款 4:平台售后退款',
+  `cext` varchar(100) DEFAULT NULL COMMENT '扩展字段',
+  `created_at` int(10) unsigned NOT NULL,
+  `updated_at` int(10) unsigned NOT NULL,
+  `availability_goods_time` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_order_id_unique` (`order_id`),
+  KEY `order_platform_user_status_index` (`platform_id`,`buyer_id`,`created_at`,`order_status`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `m_order_detail_00` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `seller_id` int(10) NOT NULL,
+  `order_id` char(25) NOT NULL COMMENT '订单id',
+  `parent_sku` varchar(25) DEFAULT NULL COMMENT '父级SKU',
+  `sku` varchar(25) DEFAULT NULL COMMENT 'SKU',
+  `product_id` int(10) DEFAULT NULL COMMENT '商品ID',
+  `product_name` varchar(25) DEFAULT NULL COMMENT '商品名称',
+  `product_count` int(10) DEFAULT NULL COMMENT '商品数量',
+  `product_price` decimal(15,2) DEFAULT NULL COMMENT '商品总售价',
+  `product_original_price` decimal(15,2) DEFAULT NULL COMMENT '商品总原价',
+  `product_type` tinyint(3) unsigned DEFAULT NULL COMMENT '商品分类：1实物 2虚拟',
+  `product_unit_price` tinyint(3) unsigned DEFAULT NULL COMMENT '商品单价',
+  `product_price_count` tinyint(3) unsigned DEFAULT NULL COMMENT '商品计价数量',
+  `product_comment` varchar(200) DEFAULT NULL COMMENT '商品备注',
+  `product_unit_original_price` decimal(15,2) DEFAULT NULL COMMENT '商品原始单价',
+  PRIMARY KEY (`id`),
+  KEY `order_detail_order_id_unique` (`order_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `m_order_index_00` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` char(25) NOT NULL COMMENT '订单id',
+  `platform_id` int(10) unsigned NOT NULL COMMENT '平台id',
+  `buyer_id` int(10) unsigned NOT NULL COMMENT '买家id',
+  `seller_id` int(10) unsigned NOT NULL COMMENT '卖家id',
+  `cellphone_number` varchar(20) DEFAULT NULL COMMENT '买家手机号',
+  `order_status` tinyint(3) unsigned NOT NULL COMMENT '订单状态:1.待支付 2.待接单 3.备餐中 4.待取餐 5.已取餐 6.已完成 7.已取消 8.待备餐',
+  `advance_order_status` tinyint(3) unsigned NOT NULL COMMENT '预订单状态:0.新订单 1.预订单 2.待备餐',
+  `take_goods_code` int(10) unsigned DEFAULT NULL COMMENT '取餐码',
+  `take_goods_time` int(10) unsigned DEFAULT NULL COMMENT '预约取餐时间',
+  `order_numeral` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '订单排号',
+  `order_source` tinyint(3) unsigned NOT NULL COMMENT '订单来源:1.H5 2.iOS 3.Android',
+  `created_at` int(10) unsigned DEFAULT NULL,
+  `updated_at` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_order_id_unique` (`order_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+
+

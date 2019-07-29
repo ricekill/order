@@ -1,0 +1,8 @@
+/vendor/*
+/.idea
+/.idea/*
+!/vendor/vendor.json
+./config.json
+/xormtools/*
+/storage/logs/*
+/config.json
